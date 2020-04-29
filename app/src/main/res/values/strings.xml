@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Expenses</string>
+    <string name="str_i_respect_your_choice">I respect your choice</string>
+    <string name="s_read_sms">I need read sms</string>
+    <string name="str_report_on">Report on:</string>
+    <string name="str_current_account_balance">"Current account balance: "</string>
+    <string name="str_up_to_the_payday">Up to the payday:</string>
+    <string name="str_average_budget_per_day">Average budget per day:</string>
+</resources>

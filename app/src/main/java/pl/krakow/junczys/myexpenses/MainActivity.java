@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         obj = my_expenses.callAttr("get_str_today");
         simpleReport.append(" ").append(obj.toString()).append("\n</h1>");
+        simpleReport.append("<br>");
 
 
         simpleReport.append("<h2>").append(getString(R.string.str_current_account_balance));
@@ -118,6 +119,17 @@ public class MainActivity extends AppCompatActivity {
         obj = my_expenses.callAttr("get_average_budget_per_day", 26);
         DecimalFormat df = new DecimalFormat("#.##");
         simpleReport.append(" ").append(df.format(obj.toFloat())).append("</h2>");
+        simpleReport.append("<br>");
+
+        // Construct sentence like this
+        // You have spent 7000 during the last 7 days, i.e. 1000 on average.
+        simpleReport.append("<h3>").append(getString(R.string.str_you_have_spent));
+        obj = my_expenses.callAttr("get_expenses_from_last_seven_days");
+        simpleReport.append(" ").append(df.format(obj.toFloat()));
+        simpleReport.append(" ").append(getString(R.string.str_during_the_last_7_days_ie));
+        simpleReport.append(" ").append(df.format(obj.toFloat()/7.0));
+        simpleReport.append(" ").append(getString(R.string.str_on_average));
+        simpleReport.append("</h2>");
 
         return simpleReport;
     }

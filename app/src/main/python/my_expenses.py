@@ -75,7 +75,7 @@ def get_current_account_balance():
     df_account_balance.dropna()
 
     # Only in python's IDE
-    print(df_account_balance)
+    print(df_account_balance.tail(10))
     df_account_balance.plot()
     plt.show()
 
@@ -126,6 +126,41 @@ def get_weekly_expenses_per_day():
     expenses_in_the_last_week = float(df_weekly_expences.iloc[-1])
 
     return expenses_in_the_last_week/7.0
+
+
+def get_expenses_from_last_seven_days():
+
+    global my_file
+
+    # Only for control
+    # print("My file:", my_file)
+
+    df_account_balance = pd.read_csv(my_file)
+
+    df_account_balance['Date'] = pd.to_datetime(df_account_balance['Date'], dayfirst=True, errors='coerce')
+    df_account_balance = df_account_balance.set_index('Date')
+    df_account_balance.dropna()
+
+    # Only in python's IDE for control
+    # print(df_account_balance)
+    # df_account_balance.plot()
+    # plt.show()
+
+    # Calculate expenses. It means only negative numbers.
+    df_daily_diff = df_account_balance - df_account_balance.shift()
+    df_daily_expenses = df_daily_diff.where(df_daily_diff < 0.0)
+    df_daily_expenses.rename(columns={'Account balance': 'Expenses'}, inplace=True)
+    df_daily_expenses.dropna(inplace=True)
+
+    # Only in python's IDE for control
+    # print(df_daily_expenses.tail(7))
+    # df_daily_expenses.plot()
+    # plt.show()
+
+    # TODO Maybe some day I do this function with parameter - number of days that interest em
+    expenses_in_the_last_7days = float(df_daily_expenses.tail(7).sum())
+
+    return expenses_in_the_last_7days
 
 
 def my_calculations():

@@ -19,7 +19,15 @@ my_expenses.set_file_name('csv/my_expenses.csv')
 # print(my_expenses.get_last_date_in_file())
 
 # expenses in the last week per day
-print("Weekly expenses per day: ")
-temp = my_expenses.get_weekly_expenses_per_day()
+# print("Weekly expenses per day: ")
+# temp = my_expenses.get_weekly_expenses_per_day()
+# print(temp)
+# print(my_expenses.get_weekly_expenses_per_day())
+
+
+# expenses in the last 7 days
+print("Last 7 days expenses per day: ")
+temp = my_expenses.get_expenses_from_last_seven_days()
 print(temp)
 # print(my_expenses.get_weekly_expenses_per_day())
+

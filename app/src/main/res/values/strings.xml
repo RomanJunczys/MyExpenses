@@ -6,4 +6,7 @@
     <string name="str_current_account_balance">"Current account balance: "</string>
     <string name="str_up_to_the_payday">Up to the payday:</string>
     <string name="str_average_budget_per_day">Average budget per day:</string>
+    <string name="str_you_have_spent">You have spent</string>
+    <string name="str_during_the_last_7_days_ie">during the last 7 days, i.e.</string>
+    <string name="str_on_average">on average.</string>
 </resources>

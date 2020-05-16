@@ -1,8 +1,10 @@
 package pl.krakow.junczys.myexpenses;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -10,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+// TODO Two the same algorithms. Once for oll dates, second for dates after last date in file. Twice the same code.
 
 class MessagesInBox {
 
@@ -55,8 +59,16 @@ class MessagesInBox {
 
 //                    final String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
 
-                int indexStart = body.indexOf("wynosi ");
-                int indexStop = body.indexOf(" PLN");
+
+                // bank name read from preferences, setting in SettingAcitivity
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+                String str_word_before_value = sharedPref.getString("key_word_before_value_preference", "wynosi ");
+                String str_word_after_value = sharedPref.getString("key_word_after_value_preference", " PLN");
+
+
+
+                int indexStart = body.indexOf(str_word_before_value);
+                int indexStop = body.indexOf(str_word_after_value);
 
                 String str_value;
                 if( indexStart != -1 & indexStop != -1 ){
@@ -109,8 +121,14 @@ class MessagesInBox {
 
 //                    final String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
 
-                int indexStart = body.indexOf("wynosi ");
-                int indexStop = body.indexOf(" PLN");
+                // bank name read from preferences, setting in SettingAcitivity
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+                String str_word_before_value = sharedPref.getString("key_word_before_value_preference", "wynosi ");
+                String str_word_after_value = sharedPref.getString("key_word_after_value_preference", " PLN");
+
+                int indexStart = body.indexOf(str_word_before_value);
+                int indexStop = body.indexOf(str_word_after_value);
+
 
                 String str_value;
                 if( indexStart != -1 & indexStop != -1 ){

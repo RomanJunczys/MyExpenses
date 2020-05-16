@@ -8,30 +8,28 @@
 
     <TextView
         android:id="@+id/id_tv_text_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="Hello World!"
         android:textAlignment="viewStart"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/id_pb_load_data"
         style="?android:attr/progressBarStyle"
-        android:layout_width="222dp"
+        android:layout_width="0dp"
         android:layout_height="174dp"
         android:progressTint="@color/colorPrimary"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/id_tv_text_view"
-        app:layout_constraintEnd_toEndOf="@+id/id_tv_text_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/id_tv_text_view" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

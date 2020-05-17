@@ -22,7 +22,7 @@
             android:key="key_word_after_value_preference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="What is the word before the account balance value in your text message?"
+            android:summary="What is the word after the account balance value in your text message?"
             android:title="The word after..." />
         <EditTextPreference
             android:defaultValue="26"

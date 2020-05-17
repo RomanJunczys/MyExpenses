@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">My Expenses</string>
     <string name="str_i_respect_your_choice">I respect your choice!</string>
-    <string name="s_read_sms">App(name) requires to have access to text messages</string>
+    <string name="s_read_sms">App(name) requires permission to read text messages</string>
     <string name="str_report_on">Report on:</string>
     <string name="str_current_account_balance">"Account balance: "</string>
     <string name="str_up_to_the_payday">Days to payday:</string>

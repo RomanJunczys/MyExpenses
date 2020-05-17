@@ -26,6 +26,7 @@
             android:title="The word after..." />
         <EditTextPreference
             android:defaultValue="26"
+            android:inputType="numberSigned"
             android:key="key_payday_preference"
             android:selectAllOnFocus="true"
             android:singleLine="true"

@@ -3,11 +3,14 @@ package pl.krakow.junczys.myexpenses;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,9 +28,44 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.Integer.valueOf;
+
 
 public class MainActivity extends AppCompatActivity {
+
     String TAG = "MainActivity: ";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        TextView tv_text_view = findViewById(R.id.id_tv_text_view);
+        ProgressBar pb_load_data = findViewById(R.id.id_pb_load_data);
+
+
+        tv_text_view.setVisibility(View.INVISIBLE);
+        pb_load_data.setVisibility(View.VISIBLE);
+
+        // Values
+        valuesToFile();
+
+
+        // Report
+        StringBuilder stringBuilder;
+        stringBuilder = simpleReport();
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            tv_text_view.setText(Html.fromHtml(stringBuilder.toString(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            tv_text_view.setText(Html.fromHtml(stringBuilder.toString()));
+        }
+
+        tv_text_view.setVisibility(View.VISIBLE);
+        pb_load_data.setVisibility(View.INVISIBLE);
+
+    }
 
 
     void valuesToFile(){
@@ -39,7 +77,13 @@ public class MainActivity extends AppCompatActivity {
         /////////////////////////////////////////////////////////////////////////
         // Add new values to file or make new file with all values from sms inbox
         SaveListOfStringsToCsv saveListOfStringsToCsv = new SaveListOfStringsToCsv(getApplicationContext(),"my_expenses.csv");
-        MessagesInBox messagesInBox = new MessagesInBox( getApplicationContext(), Uri.parse("content://sms/inbox"),"Alior Bank" );
+
+
+        // bank name read from preferences, setting in SettingAcitivity
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String str_in_address = sharedPref.getString("key_bank_name_preference", "Alior Bank");
+
+        MessagesInBox messagesInBox = new MessagesInBox( getApplicationContext(), Uri.parse("content://sms/inbox"), str_in_address );
 
         if( saveListOfStringsToCsv.fileExist() ){
 
@@ -115,12 +159,23 @@ public class MainActivity extends AppCompatActivity {
         simpleReport.append(obj.toFloat()).append("</h2>");
 
         simpleReport.append("<h2>").append(getString(R.string.str_up_to_the_payday));
-        obj = my_expenses.callAttr("get_days_to_payday", 26);
+
+        // Payday read from preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String str_payday = sharedPref.getString("key_payday_preference", "26");
+        Integer int_payday;
+        try {
+            int_payday = Integer.parseInt(str_payday);
+        } catch (NumberFormatException e) {
+            int_payday = 26;
+        }
+
+        obj = my_expenses.callAttr("get_days_to_payday", int_payday);
         simpleReport.append(" ").append(obj.toInt()).append("</h2>");
 
 
         simpleReport.append("<h2>").append(getString(R.string.str_average_budget_per_day));
-        obj = my_expenses.callAttr("get_average_budget_per_day", 26);
+        obj = my_expenses.callAttr("get_average_budget_per_day", int_payday);
         DecimalFormat df = new DecimalFormat("#.##");
         simpleReport.append(" ").append(df.format(obj.toFloat())).append("</h2>");
         simpleReport.append("<br>");
@@ -157,36 +212,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        TextView tv_text_view = findViewById(R.id.id_tv_text_view);
-        ProgressBar pb_load_data = findViewById(R.id.id_pb_load_data);
-
-
-        tv_text_view.setVisibility(View.INVISIBLE);
-        pb_load_data.setVisibility(View.VISIBLE);
-
-        // Values
-        valuesToFile();
-
-
-        // Report
-        StringBuilder stringBuilder;
-        stringBuilder = simpleReport();
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            tv_text_view.setText(Html.fromHtml(stringBuilder.toString(), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            tv_text_view.setText(Html.fromHtml(stringBuilder.toString()));
-        }
-
-        tv_text_view.setVisibility(View.VISIBLE);
-        pb_load_data.setVisibility(View.INVISIBLE);
-
-    }
 }

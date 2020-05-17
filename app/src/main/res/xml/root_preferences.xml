@@ -8,28 +8,28 @@
             android:key="key_bank_name_preference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="Enter the name of your bank which are in smses."
+            android:summary="Enter the name of your bank."
             android:title="@string/str_bank_name_preference" />
         <EditTextPreference
             android:defaultValue="wynosi "
             android:key="key_word_before_value_preference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="Word before the value of the account balance in smses."
-            android:title="The word before" />
+            android:summary="What is the word before the account balance value in your text message?"
+            android:title="The word before..." />
         <EditTextPreference
             android:defaultValue=" PLN"
             android:key="key_word_after_value_preference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="Word after the value of the account balance in smses."
-            android:title="The word after" />
+            android:summary="What is the word before the account balance value in your text message?"
+            android:title="The word after..." />
         <EditTextPreference
             android:defaultValue="26"
             android:key="key_payday_preference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="The day on which the payday is usually made."
+            android:summary="Your payday (day of the month)."
             android:title="The payday" />
     </PreferenceCategory>
 

@@ -28,4 +28,5 @@
     <string name="str_bank_name_preference">Bank name</string>
     <string name="str_i_get_text_messages">I get text messages with the account balance.</string>
     <string name="str_i_dont_get_text_messages">I don\'t get text messages with the account balance.</string>
+    <string name="str_from_debt_to_savings">from debt to savings</string>
 </resources>

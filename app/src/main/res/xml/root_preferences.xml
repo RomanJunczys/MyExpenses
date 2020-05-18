@@ -1,6 +1,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <PreferenceCategory android:title="The bank">
+
+        <ListPreference
+            android:defaultValue="none"
+            android:entries="@array/choose_bank_entries"
+            android:entryValues="@array/choose_bank_values"
+            android:key="key_choose_bank_list_preference"
+            android:title="Chose the bank from list" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/str_bank_related_settings">
 
         <EditTextPreference

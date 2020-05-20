@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -30,14 +32,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    void setPreferencesByDefoult(String str_chose_bank){
+    void setPreferencesByDefault(String str_chose_bank){
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPref.edit();
 
         switch( str_chose_bank ){
 
             case "alior_bank":
 
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-                SharedPreferences.Editor editor = sharedPref.edit();
+
+
                 editor.putString("key_bank_name_preference", "Alior Bank");
                 editor.putString("key_word_before_value_preference", "wynosi ");
                 editor.putString("key_word_after_value_preference", " PLN");
@@ -46,6 +51,13 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
 
             case "mbank":
+
+
+                editor.putString("key_bank_name_preference", "mBank");
+                editor.putString("key_word_before_value_preference", "wynosi ");
+                editor.putString("key_word_after_value_preference", " PLN");
+                editor.commit();
+
                 break;
 
             default:
@@ -62,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
             // If set bank
             // bank name read from preferences, setting in SettingAcitivity
             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            String str_choose_bank = sharedPref.getString("key_choose_bank_list_preference", "Alior Bank");
+            String str_choose_bank = sharedPref.getString("key_choose_bank_list_preference", "none");
 
             if( str_choose_bank.equals("none") ){
 
@@ -70,10 +82,10 @@ public class SettingsActivity extends AppCompatActivity {
 
             } else {
 
-                setPreferencesByDefoult( str_choose_bank );
+                setPreferencesByDefault( str_choose_bank );
 
                 // In that place I have to choose the bank.
-                Intent intent = new Intent(SettingsActivity.this, MyPermissionActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, StartActivity.class);
                 startActivity(intent);
             }
 
@@ -90,6 +102,29 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+
+            if(true) {
+
+                ListPreference listPreference = findPreference("key_choose_bank_list_preference");
+                if (listPreference != null) {
+                    listPreference.setVisible(true);
+                    listPreference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
+                }
+
+                EditTextPreference editTextPreference = findPreference("key_bank_name_preference");
+                if (editTextPreference != null) {
+                    editTextPreference.setVisible(true);
+                    editTextPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
+                }
+
+                editTextPreference = findPreference("key_payday_preference");
+                if (editTextPreference != null) {
+                    editTextPreference.setVisible(true);
+                    editTextPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
+                }
+
+            }
+
         }
     }
 }

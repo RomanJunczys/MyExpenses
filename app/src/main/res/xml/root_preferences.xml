@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="The bank">
+    <PreferenceCategory android:title="The name of bank">
 
         <ListPreference
             android:defaultValue="none"
@@ -34,6 +34,7 @@
             android:singleLine="true"
             android:summary="What is the word before the account balance value in your text message?"
             android:title="The word after..." />
+
         <EditTextPreference
             android:defaultValue="26"
             android:inputType="numberSigned"

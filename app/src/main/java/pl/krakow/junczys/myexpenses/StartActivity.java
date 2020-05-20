@@ -18,10 +18,11 @@ public class StartActivity extends AppCompatActivity {
 
         // Check if there is some settings in preferences. If so start application.
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String str_choose_bank = sharedPref.getString("key_choose_bank_list_preference", "none");
 
-        if( sharedPref.contains("key_choose_bank_list_preference") ){
+        if( !str_choose_bank.equals("none") ){
 
-            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+            Intent intent = new Intent(StartActivity.this, MyPermissionActivity.class);
             startActivity(intent);
             finish();
 

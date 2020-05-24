@@ -1,29 +1,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/str_bank_related_settings">
+    <PreferenceCategory android:title="The name of bank">
 
-        <EditTextPreference
-            android:defaultValue="Alior Bank"
-            android:key="key_bank_name_preference"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="Enter the name of your bank."
-            android:title="@string/str_bank_name_preference" />
-        <EditTextPreference
-            android:defaultValue="wynosi "
-            android:key="key_word_before_value_preference"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="What is the word before the account balance value in your text message?"
-            android:title="The word before..." />
-        <EditTextPreference
-            android:defaultValue=" PLN"
-            android:key="key_word_after_value_preference"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="What is the word after the account balance value in your text message?"
-            android:title="The word after..." />
+        <ListPreference
+            android:defaultValue="none"
+            android:entries="@array/choose_bank_entries"
+            android:entryValues="@array/choose_bank_values"
+            android:key="key_choose_bank_list_preference"
+            android:summary="@string/str_the_name_of_bank_in_your_messages"
+            android:title="Chose the bank from list" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="The payday">
+
         <EditTextPreference
             android:defaultValue="26"
             android:inputType="numberSigned"

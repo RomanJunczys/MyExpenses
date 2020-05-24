@@ -1,9 +1,11 @@
 package pl.krakow.junczys.myexpenses;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
@@ -48,27 +50,37 @@ public class MainActivity extends AppCompatActivity {
         pb_load_data.setVisibility(View.VISIBLE);
 
         // Values
-        valuesToFile();
+        if( valuesToFile()  ){
+
+            // Report
+            StringBuilder stringBuilder;
+            stringBuilder = simpleReport();
 
 
-        // Report
-        StringBuilder stringBuilder;
-        stringBuilder = simpleReport();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                tv_text_view.setText(Html.fromHtml(stringBuilder.toString(), Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                tv_text_view.setText(Html.fromHtml(stringBuilder.toString()));
+            }
+
+            tv_text_view.setVisibility(View.VISIBLE);
+            pb_load_data.setVisibility(View.INVISIBLE);
+
+        }else{
+
+            tv_text_view.setText("I do not find any mesage form Your Bank with account balance");
+            tv_text_view.setVisibility(View.VISIBLE);
+            pb_load_data.setVisibility(View.INVISIBLE);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            tv_text_view.setText(Html.fromHtml(stringBuilder.toString(), Html.FROM_HTML_MODE_COMPACT));
-        } else {
-            tv_text_view.setText(Html.fromHtml(stringBuilder.toString()));
         }
-
-        tv_text_view.setVisibility(View.VISIBLE);
-        pb_load_data.setVisibility(View.INVISIBLE);
 
     }
 
 
-    void valuesToFile(){
+    boolean valuesToFile(){
+
+        boolean areMessages = false;
 
         if(!Python.isStarted()){
             Python.start(new AndroidPlatform(this));
@@ -119,14 +131,42 @@ public class MainActivity extends AppCompatActivity {
                 saveListOfStringsToCsv.AppendListOfStrings(messagesFromBankAfterDate);
             }
 
+            areMessages = true;
+
         } else {
 
             // Make new file and read all values from inbox and write file
 
             List<String> messagesFromBank = messagesInBox.getListOfMessages();
-            saveListOfStringsToCsv.WriteListOfStrings(messagesFromBank);
+
+            if( !messagesFromBank.isEmpty() ){
+
+                saveListOfStringsToCsv.WriteListOfStrings(messagesFromBank);
+                areMessages = true;
+
+            } else {
+
+                // Message Box There is no message from Bank
+
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("Info");
+                alertDialog.setMessage("There is no message from your Bank with account balance");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+
+                areMessages = false;
+            }
+
+
+
 
         }
+        return areMessages;
     }
 
 
@@ -207,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.id_action_settings) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

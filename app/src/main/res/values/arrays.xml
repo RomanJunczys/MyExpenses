@@ -1,12 +1,16 @@
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
+
+    <!-- Choose the Bank Preference -->
+    <string-array name="choose_bank_entries">
+        <item>Alior Bank</item>
+        <item>mBank</item>
+        <item>None</item>
     </string-array>
 
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
+    <string-array name="choose_bank_values">
+        <item>alior_bank</item>
+        <item>mbank</item>
+        <item>none</item>
     </string-array>
+
 </resources>

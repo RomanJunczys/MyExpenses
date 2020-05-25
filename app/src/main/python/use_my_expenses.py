@@ -26,8 +26,10 @@ my_expenses.set_file_name('csv/my_expenses.csv')
 
 
 # expenses in the last 7 days
-print("Last 7 days expenses per day: ")
-temp = my_expenses.get_expenses_from_last_seven_days()
-print(temp)
+# print("Last 7 days expenses per dget_expenses_from_last_seven_daysay: ")
+# temp = my_expenses.()
+# print(temp)
 # print(my_expenses.get_weekly_expenses_per_day())
+
+# I need how many messages are stored in file
 

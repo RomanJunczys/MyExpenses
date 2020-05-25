@@ -40,6 +40,22 @@ def set_file_name(in_file_name):
     my_file = in_file_name
 
 
+def get_how_many_records_in_file():
+
+    global my_file
+
+    print("My file:", my_file)
+    df_account_balance = pd.read_csv(my_file)
+
+    df_account_balance['Date'] = pd.to_datetime(df_account_balance['Date'], dayfirst=True, errors='coerce')
+    df_account_balance = df_account_balance.set_index('Date')
+    df_account_balance.dropna()
+
+     # How many records in the file - need to choose kind of reports
+    how_many_records_in_file = df_account_balance.shape[0]
+
+    return how_many_records_in_file
+
 def get_last_date_in_file():
 
     global my_file

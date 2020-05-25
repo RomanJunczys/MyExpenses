@@ -4,7 +4,6 @@ package pl.krakow.junczys.myexpenses;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,7 +30,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static java.lang.Integer.valueOf;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -50,11 +49,24 @@ public class MainActivity extends AppCompatActivity {
         pb_load_data.setVisibility(View.VISIBLE);
 
         // Values
-        if( valuesToFile()  ){
+        int howManyRecords = valuesToFile();
+        if(  howManyRecords > 0  ){
+
+
+            StringBuilder stringBuilder;
 
             // Report
-            StringBuilder stringBuilder;
-            stringBuilder = simpleReport();
+            if( howManyRecords == 1 ) {
+
+                stringBuilder = verySimpleReport();
+
+            } else {
+
+                // TODO if user wants to show more complatated report then do it if there are more records in file
+                stringBuilder = verySimpleReport();
+                // stringBuilder = simpleReport();
+
+            }
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -78,9 +90,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    boolean valuesToFile(){
+    int valuesToFile(){
 
-        boolean areMessages = false;
+        int howManyMessages = 0;
 
         if(!Python.isStarted()){
             Python.start(new AndroidPlatform(this));
@@ -131,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
                 saveListOfStringsToCsv.AppendListOfStrings(messagesFromBankAfterDate);
             }
 
-            areMessages = true;
+            obj = my_expenses.callAttr("get_how_many_records_in_file");
+            howManyMessages = obj.toInt();
+
 
         } else {
 
@@ -142,7 +156,11 @@ public class MainActivity extends AppCompatActivity {
             if( !messagesFromBank.isEmpty() ){
 
                 saveListOfStringsToCsv.WriteListOfStrings(messagesFromBank);
-                areMessages = true;
+                Python python = Python.getInstance();
+                PyObject my_expenses = python.getModule("my_expenses");
+                my_expenses.callAttr("set_file_name",saveListOfStringsToCsv.getFile());
+                PyObject obj = my_expenses.callAttr("get_how_many_records_in_file");
+                howManyMessages = obj.toInt();
 
             } else {
 
@@ -159,14 +177,74 @@ public class MainActivity extends AppCompatActivity {
                         });
                 alertDialog.show();
 
-                areMessages = false;
+                howManyMessages = 0;
             }
 
-
-
-
         }
-        return areMessages;
+        Log.d(TAG, "how Many Massages"+howManyMessages);
+        return howManyMessages;
+    }
+
+
+
+
+    StringBuilder verySimpleReport(){
+
+        if(!Python.isStarted()){
+            Python.start(new AndroidPlatform(this));
+        }
+
+        SaveListOfStringsToCsv saveListOfStringsToCsv = new SaveListOfStringsToCsv(getApplicationContext(),"my_expenses.csv");
+
+        Python python = Python.getInstance();
+        PyObject my_expenses = python.getModule("my_expenses");
+        my_expenses.callAttr("set_file_name",saveListOfStringsToCsv.getFile());
+
+        StringBuilder simpleReport = new StringBuilder();
+
+        simpleReport.append("<h1>").append(getString(R.string.str_report_on));
+
+        PyObject obj = my_expenses.callAttr("get_str_today");
+
+        obj = my_expenses.callAttr("get_str_today");
+        simpleReport.append(" ").append(obj.toString()).append("\n</h1>");
+        simpleReport.append("<br>");
+
+
+        simpleReport.append("<h2>").append(getString(R.string.str_current_account_balance));
+
+        obj = my_expenses.callAttr("get_current_account_balance");
+        simpleReport.append(obj.toFloat()).append("</h2>");
+
+        simpleReport.append("<h2>").append(getString(R.string.str_up_to_the_payday));
+
+        // Payday read from preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String str_payday = sharedPref.getString("key_payday_preference", "26");
+        Integer int_payday;
+        try {
+            int_payday = Integer.parseInt(str_payday);
+        } catch (NumberFormatException e) {
+            int_payday = 26;
+        }
+
+        obj = my_expenses.callAttr("get_days_to_payday", int_payday);
+        simpleReport.append(" ").append(obj.toInt()).append("</h2>");
+
+
+        simpleReport.append("<h2>").append(getString(R.string.str_average_budget_per_day));
+        obj = my_expenses.callAttr("get_average_budget_per_day", int_payday);
+        DecimalFormat df = new DecimalFormat("#.##");
+        simpleReport.append(" ").append(df.format(obj.toFloat())).append("</h2>");
+        simpleReport.append("<br>");
+        simpleReport.append("<br>");
+        simpleReport.append("<br>");
+        simpleReport.append("<br>");
+        simpleReport.append("<br>");
+        simpleReport.append("<br>");
+        simpleReport.append("<br>");
+
+        return simpleReport;
     }
 
 

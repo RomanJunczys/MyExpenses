@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,10 +17,10 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         // Check if there is some settings in preferences. If so start application.
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String str_choose_bank = sharedPref.getString("key_choose_bank_list_preference", "none");
 
-        if( !str_choose_bank.equals("none") ){
+        if( !(str_choose_bank != null && str_choose_bank.equals("none"))){
 
             Intent intent = new Intent(StartActivity.this, MyPermissionActivity.class);
             startActivity(intent);

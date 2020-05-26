@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
         simpleReport.append("<h2>").append(getString(R.string.str_current_account_balance));
 
         obj = my_expenses.callAttr("get_current_account_balance");
-        simpleReport.append(obj.toFloat()).append("</h2>");
+        simpleReport.append(" ").append(obj.toFloat()).append("</h2>");
 
         simpleReport.append("<h2>").append(getString(R.string.str_up_to_the_payday));
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_i_get_text_messages">Tak, dostaje smsy z mojego banku ze stanem konta.</string>
+    <string name="str_i_dont_get_text_messages">Nie, nie dostaje smsów ze stanem mojego konta.</string>
+    <string name="str_from_debt_to_savings">od długów do oszczędności</string>
+    <string name="app_name">Moje wydatki</string>
+    <string name="str_report_on">Stan na dzień</string>
+    <string name="str_the_name_of_bank">Nazwa banku</string>
+    <string name="str_the_payday">Dzień miesiąca z wypłatą</string>
+    <string name="str_chose_the_bank_from_list">Wybierz swój bank z listy</string>
+    <string name="str_your_payday_day_of_the_month">Dzień wypłaty (dzień miesiąca)</string>
+    <string name="title_activity_settings">Ustawienia</string>
+    <string name="str_read_sms">Aplikacja potrzebuje móc czytać smsy aby działać.</string>
+    <string name="str_i_respect_your_choice">Szanuje Twój wybór.</string>
+    <string name="str_current_account_balance">Stan konta</string>
+    <string name="str_up_to_the_payday">Dni do wyplaty</string>
+    <string name="str_average_budget_per_day">Możesz wydać średnio na dzień</string>
+</resources>

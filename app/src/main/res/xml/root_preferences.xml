@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="The name of bank">
+    <PreferenceCategory android:title="@string/str_the_name_of_bank">
 
         <ListPreference
             android:defaultValue="none"
@@ -9,10 +9,10 @@
             android:entryValues="@array/choose_bank_values"
             android:key="key_choose_bank_list_preference"
             android:summary="@string/str_the_name_of_bank_in_your_messages"
-            android:title="Chose the bank from list" />
+            android:title="@string/str_chose_the_bank_from_list" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="The payday">
+    <PreferenceCategory android:title="@string/str_the_payday">
 
         <EditTextPreference
             android:defaultValue="26"
@@ -20,8 +20,8 @@
             android:key="key_payday_preference"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="Your payday (day of the month)."
-            android:title="The payday" />
+            android:summary="@string/str_your_payday_day_of_the_month"
+            android:title="@string/str_the_payday" />
     </PreferenceCategory>
 
 </PreferenceScreen>

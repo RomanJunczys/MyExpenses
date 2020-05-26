@@ -1,7 +1,15 @@
 <resources>
+
+
     <string name="app_name">My Expenses</string>
+
+    <!-- MyPermission Activity -->
     <string name="str_i_respect_your_choice">I respect your choice!</string>
-    <string name="s_read_sms">App(name) requires permission to read text messages</string>
+    <string name="str_read_sms">App requires permission to read text messages</string>
+
+
+
+    <!-- Main Activity -->
     <string name="str_report_on">Report on </string>
     <string name="str_current_account_balance">"Account balance "</string>
     <string name="str_up_to_the_payday">Days to payday </string>
@@ -9,25 +17,22 @@
     <string name="str_you_have_spent">You have spent:</string>
     <string name="str_during_the_last_7_days_ie">during the last 7 days, i.e.</string>
     <string name="str_on_average">on average.</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+
+    <!-- Start Activity -->
+    <string name="str_i_get_text_messages">I get text messages with the account balance</string>
+    <string name="str_i_dont_get_text_messages">I don\'t get text messages with the account balance.</string>
+
+    <!-- Settings Activity -->
     <string name="title_activity_settings">Settings</string>
     <string name="str_bank_related_manual_settings">Bank-releted manual settings</string>
     <string name="str_bank_name_preference">Bank name</string>
-    <string name="str_i_get_text_messages">I get text messages with the account balance.</string>
-    <string name="str_i_dont_get_text_messages">I don\'t get text messages with the account balance.</string>
     <string name="str_from_debt_to_savings">from debt to savings</string>
     <string name="str_the_name_of_bank_in_your_messages">The name of bank in your messages.</string>
+    <string name="str_the_name_of_bank">The name of bank</string>
+    <string name="str_the_payday">The payday</string>
+    <string name="str_chose_the_bank_from_list">Chose the bank from list</string>
+    <string name="str_your_payday_day_of_the_month">Your payday (day of the month).</string>
 </resources>

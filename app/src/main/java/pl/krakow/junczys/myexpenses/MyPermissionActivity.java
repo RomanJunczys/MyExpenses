@@ -204,7 +204,7 @@ public class MyPermissionActivity extends AppCompatActivity {
 
 
             case Manifest.permission.READ_SMS:
-                opis = getResources().getString(R.string.s_read_sms); // tu wskaż opis z zasobów stringu opisującego wyjaśnienie do tego uprawnienia );
+                opis = getResources().getString(R.string.str_read_sms); // tu wskaż opis z zasobów stringu opisującego wyjaśnienie do tego uprawnienia );
                 break;
 
             /*

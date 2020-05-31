@@ -20,9 +20,12 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import static androidx.preference.PreferenceManager.*;
 
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+    String TAG = "SettingsActivity: ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +44,18 @@ public class SettingsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        setupSharedPreferences();
+
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("SettingsActivity","yes");
+    private void setupSharedPreferences() {
+        SharedPreferences sharedPreferences = getDefaultSharedPreferences(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
     }
 
-    void setPreferencesByDefault(String str_chose_bank){
+   void setPreferencesByDefault(String str_chose_bank){
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPref = getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         switch( str_chose_bank ){
@@ -96,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             // If set bank
             // bank name read from preferences, setting in SettingAcitivity
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences sharedPref = getDefaultSharedPreferences(this);
             String str_choose_bank = sharedPref.getString("key_choose_bank_list_preference", "none");
 
             if( str_choose_bank.equals("none") ){
@@ -115,6 +119,24 @@ public class SettingsActivity extends AppCompatActivity {
            NavUtils.navigateUpFromSameTask(this);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        Log.d(TAG, "on shared preference changed");
+
+        if (key.equals("key_bank_name_preference")) {
+            Log.d(TAG, "key bank name prefernence");
+        }
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
 

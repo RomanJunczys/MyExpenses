@@ -24,4 +24,5 @@
             android:title="@string/str_the_payday" />
     </PreferenceCategory>
 
+
 </PreferenceScreen>

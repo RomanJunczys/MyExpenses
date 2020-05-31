@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
+import android.icu.text.NumberFormat;
+import android.icu.util.Currency;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -213,8 +215,12 @@ public class MainActivity extends AppCompatActivity {
 
         simpleReport.append("<h2>").append(getString(R.string.str_current_account_balance));
 
+        // Format currency
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(0);
+
         obj = my_expenses.callAttr("get_current_account_balance");
-        simpleReport.append(" ").append(obj.toFloat()).append("</h2>");
+        simpleReport.append(" ").append(format.format(obj.toFloat())).append("</h2>");
 
         simpleReport.append("<h2>").append(getString(R.string.str_up_to_the_payday));
 
@@ -234,8 +240,9 @@ public class MainActivity extends AppCompatActivity {
 
         simpleReport.append("<h2>").append(getString(R.string.str_average_budget_per_day));
         obj = my_expenses.callAttr("get_average_budget_per_day", int_payday);
-        DecimalFormat df = new DecimalFormat("#.##");
-        simpleReport.append(" ").append(df.format(obj.toFloat())).append("</h2>");
+        simpleReport.append(" ").append(format.format(obj.toFloat())).append("</h2>");
+
+        // TODO later lyout in .xml
         simpleReport.append("<br>");
         simpleReport.append("<br>");
         simpleReport.append("<br>");

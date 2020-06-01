@@ -24,5 +24,26 @@
             android:title="@string/str_the_payday" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/str_resources_and_costs">
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:inputType="numberDecimal"
+            android:key="key_resources_preference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/str_resources_description"
+            android:title="@string/str_resources" />
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:inputType="numberDecimal"
+            android:key="key_costs_preference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/str_costs_description"
+            android:title="@string/str_costs" />
+    </PreferenceCategory>
+
 
 </PreferenceScreen>

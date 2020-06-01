@@ -251,6 +251,17 @@ public class MainActivity extends AppCompatActivity {
         tv_last_updated.setText(stringBuilder);
 
 
+        TextView tv_resourses = findViewById(R.id.id_tv_resources);
+        String str_resources = sharedPref.getString("key_resources_preference", "0");
+        float resources = Float.parseFloat(str_resources);
+        tv_resourses.setText(format.format(resources));
+
+
+        TextView tv_costs = findViewById(R.id.id_tv_costs);
+         String str_costs = sharedPref.getString("key_costs_preference", "0");
+        float costs = Float.parseFloat(str_costs);
+        tv_costs.setText(format.format(costs));
+
 
 
 

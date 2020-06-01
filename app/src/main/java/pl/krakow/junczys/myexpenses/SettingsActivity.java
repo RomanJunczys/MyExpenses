@@ -177,6 +177,28 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                         });
             }
 
+            numberPreference = findPreference("key_resources_preference");
+            if (numberPreference != null) {
+                numberPreference.setOnBindEditTextListener(
+                        new EditTextPreference.OnBindEditTextListener() {
+                            @Override
+                            public void onBindEditText(@NonNull EditText editText) {
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                            }
+                        });
+            }
+
+            numberPreference = findPreference("key_costs_preference");
+            if (numberPreference != null) {
+                numberPreference.setOnBindEditTextListener(
+                        new EditTextPreference.OnBindEditTextListener() {
+                            @Override
+                            public void onBindEditText(@NonNull EditText editText) {
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                            }
+                        });
+            }
+
         }
     }
 }

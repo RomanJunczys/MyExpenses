@@ -47,6 +47,8 @@
 
     <string name="str_costs_description">Your costs</string>
     <string name="str_costs">Costs</string>
+    <string name="str_last_penny">last penny</string>
+    <string name="str_last_update">last update</string>
 
 
 </resources>

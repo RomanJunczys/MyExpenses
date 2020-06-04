@@ -15,4 +15,14 @@
     <string name="str_current_account_balance">Stan konta</string>
     <string name="str_up_to_the_payday">Dni do wyplaty</string>
     <string name="str_average_budget_per_day">Możesz wydać średnio na dzień</string>
+    <string name="str_daily_budget">budźet na dzień</string>
+    <string name="str_last_penny">realnie możesz wydać</string>
+    <string name="str_costs">Koszty</string>
+    <string name="str_resources">Zasoby</string>
+    <string name="str_costs_description">Wydatki o których wiesz</string>
+    <string name="str_resources_description">Dodatkowe pieniądze</string>
+    <string name="str_resources_and_costs">Zaskórniaki i Koszty</string>
+    <string name="str_days_to_payday">dni do wypłaty</string>
+    <string name="str_account_balance">stan konta</string>
+    <string name="str_last_update">ostatnia aktualizacja</string>
 </resources>

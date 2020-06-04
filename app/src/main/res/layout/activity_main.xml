@@ -42,11 +42,12 @@
     <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <TextView
-        android:id="@+id/id_tv_account_balance_value"
+        android:id="@+id/id_tv_last_penny_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="TextView"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="last penny dynamic"
         android:textColor="@android:color/black"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -54,39 +55,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_tv_account_balance"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <TextView
         android:id="@+id/id_tv_account_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/str_account_balance"
-        android:textSize="16sp"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="account balance dynamic"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/id_tv_last_penny_value"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_tv_account_balance_value" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/id_tv_daily_budget_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="daily budget dynamic"
         android:textColor="@android:color/black"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/id_tv_days_to_payday_value"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_tv_account_balance_value" />
+        app:layout_constraintTop_toBottomOf="@+id/id_tv_last_penny_value" />
 
     <TextView
         android:id="@+id/id_tv_daily_budget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/str_daily_budget"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,12 +102,14 @@
         android:id="@+id/id_tv_days_to_payday_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="days to payday"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/id_tv_last_updated"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_tv_daily_budget_value" />
 
@@ -111,7 +117,6 @@
         android:id="@+id/id_tv_days_to_payday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/str_days_to_payday"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,12 +128,12 @@
         android:id="@+id/id_tv_last_updated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="last update dynamic"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textView12"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_tv_days_to_payday_value" />
 
@@ -138,9 +143,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:text="TextView"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="recources"
         android:textColor="@android:color/holo_green_dark"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -151,9 +157,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="TextView"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="costs"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -167,5 +174,16 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_tv_last_updated" />
+
+    <TextView
+        android:id="@+id/id_tv_last_penny"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_light"
+        android:text="@string/str_last_penny"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_tv_last_penny_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

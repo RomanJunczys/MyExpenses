@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -206,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_account_balance_value = findViewById(R.id.id_tv_account_balance);
 
         // Format currency
-        NumberFormat format = NumberFormat.getCurrencyInstance();
+//        NumberFormat format = NumberFormat.getCurrencyInstance();
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         format.setMaximumFractionDigits(0);
 
         obj = my_expenses.callAttr("get_current_account_balance");

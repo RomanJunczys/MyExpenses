@@ -43,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tv_text_view = findViewById(R.id.id_tv_text_view);
-        ProgressBar pb_load_data = findViewById(R.id.id_pb_load_data);
+//        TextView tv_text_view = findViewById(R.id.id_tv_text_view);
+//        ProgressBar pb_load_data = findViewById(R.id.id_pb_load_data);
 
 
-        tv_text_view.setVisibility(View.INVISIBLE);
-        pb_load_data.setVisibility(View.VISIBLE);
+//        tv_text_view.setVisibility(View.INVISIBLE);
+//        pb_load_data.setVisibility(View.VISIBLE);
 
         // Values
         int howManyRecords = valuesToFile();
@@ -65,26 +65,27 @@ public class MainActivity extends AppCompatActivity {
             } else {
 
                 // TODO if user wants to show more complatated report then do it if there are more records in file
-                stringBuilder = verySimpleReport();
+                verySimpleReportVer2();
+                // stringBuilder = verySimpleReport();
                 // stringBuilder = simpleReport();
 
             }
 
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                tv_text_view.setText(Html.fromHtml(stringBuilder.toString(), Html.FROM_HTML_MODE_COMPACT));
-            } else {
-                tv_text_view.setText(Html.fromHtml(stringBuilder.toString()));
-            }
-
-            tv_text_view.setVisibility(View.VISIBLE);
-            pb_load_data.setVisibility(View.INVISIBLE);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                tv_text_view.setText(Html.fromHtml(stringBuilder.toString(), Html.FROM_HTML_MODE_COMPACT));
+//            } else {
+//                tv_text_view.setText(Html.fromHtml(stringBuilder.toString()));
+//            }
+//
+//            tv_text_view.setVisibility(View.VISIBLE);
+//            pb_load_data.setVisibility(View.INVISIBLE);
 
         }else{
 
-            tv_text_view.setText("I do not find any mesage form Your Bank with account balance");
-            tv_text_view.setVisibility(View.VISIBLE);
-            pb_load_data.setVisibility(View.INVISIBLE);
+//            tv_text_view.setText("I do not find any mesage form Your Bank with account balance");
+//            tv_text_view.setVisibility(View.VISIBLE);
+//            pb_load_data.setVisibility(View.INVISIBLE);
 
 
         }
@@ -185,6 +186,125 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.d(TAG, "how Many Massages"+howManyMessages);
         return howManyMessages;
+    }
+
+
+    void verySimpleReportVer2(){
+
+        if(!Python.isStarted()){
+            Python.start(new AndroidPlatform(this));
+        }
+
+        SaveListOfStringsToCsv saveListOfStringsToCsv = new SaveListOfStringsToCsv(getApplicationContext(),"my_expenses.csv");
+
+        Python python = Python.getInstance();
+        PyObject my_expenses = python.getModule("my_expenses");
+
+
+        my_expenses.callAttr("set_file_name", saveListOfStringsToCsv.getFile());
+
+        PyObject obj;
+
+
+
+        TextView tv_account_balance_value = findViewById(R.id.id_tv_account_balance_value);
+
+        // Format currency
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        format.setMaximumFractionDigits(0);
+
+        obj = my_expenses.callAttr("get_current_account_balance");
+        tv_account_balance_value.setText(format.format(obj.toFloat()));
+
+
+        TextView tv_daily_budget_value = findViewById(R.id.id_tv_daily_budget_value);
+
+        // Payday read from preferences
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String str_payday = sharedPref.getString("key_payday_preference", "26");
+
+        Integer int_payday;
+        try {
+            int_payday = Integer.parseInt(str_payday);
+        } catch (NumberFormatException e) {
+            // TODO use such a graphical interface to set this preferences to make sure it is integer form 1 to 31
+            int_payday = 26;
+        }
+
+        obj = my_expenses.callAttr("get_average_budget_per_day", int_payday);
+        tv_daily_budget_value.setText(format.format(obj.toFloat()));
+
+
+        TextView tv_days_to_payday_value = findViewById(R.id.id_tv_days_to_payday_value);
+
+        obj = my_expenses.callAttr("get_days_to_payday", int_payday);
+        tv_days_to_payday_value.setText( String.valueOf(obj.toInt()) );
+
+        TextView tv_last_updated = findViewById(R.id.id_tv_last_updated);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("last update:");
+        stringBuilder.append(" ");
+
+        obj = my_expenses.callAttr("get_str_today");
+        stringBuilder.append(obj.toString());
+
+        tv_last_updated.setText(stringBuilder);
+
+
+
+
+
+
+//        StringBuilder simpleReport = new StringBuilder();
+//
+//        simpleReport.append("<h1>").append(getString(R.string.str_report_on));
+//
+//        PyObject obj = my_expenses.callAttr("get_str_today");
+//
+//        obj = my_expenses.callAttr("get_str_today");
+//        simpleReport.append(" ").append(obj.toString()).append("\n</h1>");
+//        simpleReport.append("<br>");
+//
+//
+//        simpleReport.append("<h2>").append(getString(R.string.str_current_account_balance));
+//
+//        // Format currency
+//        NumberFormat format = NumberFormat.getCurrencyInstance();
+//        format.setMaximumFractionDigits(0);
+//
+//        obj = my_expenses.callAttr("get_current_account_balance");
+//        simpleReport.append(" ").append(format.format(obj.toFloat())).append("</h2>");
+//
+//        simpleReport.append("<h2>").append(getString(R.string.str_up_to_the_payday));
+//
+//        // Payday read from preferences
+//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        String str_payday = sharedPref.getString("key_payday_preference", "26");
+//        Integer int_payday;
+//        try {
+//            int_payday = Integer.parseInt(str_payday);
+//        } catch (NumberFormatException e) {
+//            int_payday = 26;
+//        }
+//
+//        obj = my_expenses.callAttr("get_days_to_payday", int_payday);
+//        simpleReport.append(" ").append(obj.toInt()).append("</h2>");
+//
+//
+//        simpleReport.append("<h2>").append(getString(R.string.str_average_budget_per_day));
+//        obj = my_expenses.callAttr("get_average_budget_per_day", int_payday);
+//        simpleReport.append(" ").append(format.format(obj.toFloat())).append("</h2>");
+//
+//        // TODO later lyout in .xml
+//        simpleReport.append("<br>");
+//        simpleReport.append("<br>");
+//        simpleReport.append("<br>");
+//        simpleReport.append("<br>");
+//        simpleReport.append("<br>");
+//        simpleReport.append("<br>");
+//        simpleReport.append("<br>");
+//
+//        return simpleReport;
     }
 
 

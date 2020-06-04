@@ -17,6 +17,7 @@
     <string name="str_you_have_spent">You have spent:</string>
     <string name="str_during_the_last_7_days_ie">during the last 7 days, i.e.</string>
     <string name="str_on_average">on average.</string>
+    <string name="str_account_balance">account balance</string>
 
 
 
@@ -36,4 +37,7 @@
     <string name="str_chose_the_bank_from_list">Chose the bank from list</string>
     <string name="str_your_payday_day_of_the_month">Your payday (day of the month).</string>
     <string name="str_start_app">Start App</string>
+    <string name="str_daily_budget">daily budget</string>
+    <string name="str_days_to_payday">days to payday</string>
+
 </resources>

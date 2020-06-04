@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -46,6 +47,10 @@ public class StartActivity extends AppCompatActivity {
             b_i_dont_get_messages.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://junczys.krakow.pl/index.php/22-moje-wydatki"));
+                    startActivity(browserIntent);
+
                     finish();
                 }
             });

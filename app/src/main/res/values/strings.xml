@@ -40,4 +40,15 @@
     <string name="str_daily_budget">daily budget</string>
     <string name="str_days_to_payday">days to payday</string>
 
+    <string name="str_resources_and_costs">Resources and Costs</string>
+    <string name="str_resources_description">Your additional financial resources</string>
+    <string name="str_resources">Resources</string>
+
+
+    <string name="str_costs_description">Your costs</string>
+    <string name="str_costs">Costs</string>
+    <string name="str_last_penny">last penny</string>
+    <string name="str_last_update">last update</string>
+
+
 </resources>

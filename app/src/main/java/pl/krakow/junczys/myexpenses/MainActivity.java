@@ -9,18 +9,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
 import android.icu.text.NumberFormat;
-import android.icu.util.Currency;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
@@ -207,20 +202,41 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        TextView tv_account_balance_value = findViewById(R.id.id_tv_account_balance_value);
+        // ACCOUNT BALANCE
+        TextView tv_account_balance_value = findViewById(R.id.id_tv_account_balance);
 
         // Format currency
         NumberFormat format = NumberFormat.getCurrencyInstance();
         format.setMaximumFractionDigits(0);
 
         obj = my_expenses.callAttr("get_current_account_balance");
-        tv_account_balance_value.setText(format.format(obj.toFloat()));
+        float f_account_balance = obj.toFloat();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getString(R.string.str_account_balance));
+        stringBuilder.append(": ");
+        stringBuilder.append(format.format(obj.toFloat()));
+        tv_account_balance_value.setText(stringBuilder);
 
 
+        // LAST PENNY account_balace + recources - costs
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String str_resources = sharedPref.getString("key_resources_preference", "0");
+        float f_resources = Float.parseFloat(str_resources);
+
+        String str_costs = sharedPref.getString("key_costs_preference", "0");
+        float f_costs = Float.parseFloat(str_costs);
+
+        float f_last_penny = f_account_balance + f_resources - f_costs;
+
+        TextView tv_last_penny = findViewById(R.id.id_tv_last_penny_value);
+        tv_last_penny.setText(format.format(f_last_penny));
+
+
+
+        // DAILY BUDGET
         TextView tv_daily_budget_value = findViewById(R.id.id_tv_daily_budget_value);
 
         // Payday read from preferences
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String str_payday = sharedPref.getString("key_payday_preference", "26");
 
         Integer int_payday;
@@ -231,8 +247,7 @@ public class MainActivity extends AppCompatActivity {
             int_payday = 26;
         }
 
-        obj = my_expenses.callAttr("get_average_budget_per_day", int_payday);
-        tv_daily_budget_value.setText(format.format(obj.toFloat()));
+        tv_daily_budget_value.setText(format.format(f_last_penny/int_payday));
 
 
         TextView tv_days_to_payday_value = findViewById(R.id.id_tv_days_to_payday_value);
@@ -241,15 +256,22 @@ public class MainActivity extends AppCompatActivity {
         tv_days_to_payday_value.setText( String.valueOf(obj.toInt()) );
 
         TextView tv_last_updated = findViewById(R.id.id_tv_last_updated);
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("last update:");
-        stringBuilder.append(" ");
+        stringBuilder = new StringBuilder();
+        stringBuilder.append(getString(R.string.str_last_update));
+        stringBuilder.append(": ");
 
         obj = my_expenses.callAttr("get_str_today");
         stringBuilder.append(obj.toString());
 
         tv_last_updated.setText(stringBuilder);
 
+
+        TextView tv_resourses = findViewById(R.id.id_tv_resources);
+        tv_resourses.setText(format.format(f_resources));
+
+
+        TextView tv_costs = findViewById(R.id.id_tv_costs);
+        tv_costs.setText(format.format(f_costs));
 
 
 

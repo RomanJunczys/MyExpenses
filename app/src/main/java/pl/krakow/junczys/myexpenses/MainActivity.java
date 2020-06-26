@@ -51,12 +51,10 @@ public class MainActivity extends AppCompatActivity {
         if(  howManyRecords > 0  ){
 
 
-            StringBuilder stringBuilder;
-
             // Report
             if( howManyRecords == 1 ) {
 
-                stringBuilder = verySimpleReport();
+                verySimpleReportVer2();
 
             } else {
 
@@ -292,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("which_settings", "costs");  // pass your values and retrieve them in the other Activity using AnyKeyName
                 startActivity(intent);
 
             }
@@ -497,6 +496,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.id_action_settings) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            intent.putExtra("which_settings", "after_change");
             startActivity(intent);
             finish();
             return true;

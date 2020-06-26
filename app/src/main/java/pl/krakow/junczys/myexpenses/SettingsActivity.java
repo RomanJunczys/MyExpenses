@@ -170,9 +170,136 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 str_which_settings = bundle.getString("which_settings", "");
             }
 
-            if( str_which_settings.equals("resources") ){
+            switch (str_which_settings) {
 
-                // set all invisible besides resources
+                case "resources": {
+
+                    // set all invisible besides resources
+
+                    PreferenceCategory preferenceCategory = findPreference("key_preference_category_name_of_bank");
+                    if (preferenceCategory != null) {
+                        preferenceCategory.setVisible(false);
+                    }
+
+                    preferenceCategory = findPreference("key_preference_category_payday");
+                    if (preferenceCategory != null) {
+                        preferenceCategory.setVisible(false);
+                    }
+
+                    EditTextPreference numberPreference = findPreference("key_costs_preference");
+                    if (numberPreference != null) {
+                        numberPreference.setVisible(false);
+                    }
+
+                    numberPreference = findPreference("key_resources_preference");
+                    if (numberPreference != null) {
+                        numberPreference.setOnBindEditTextListener(
+                                new EditTextPreference.OnBindEditTextListener() {
+                                    @Override
+                                    public void onBindEditText(@NonNull EditText editText) {
+                                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                        editText.setSelection(editText.getText().length());
+                                    }
+                                });
+                    }
+
+                    break;
+                }
+
+                case "bank_payday_settings": {
+
+                    // set visible only the bank and the payday setting
+
+                    PreferenceCategory preferenceCategory = findPreference("key_preference_category_name_of_bank");
+                    if (preferenceCategory != null) {
+                        preferenceCategory.setVisible(true);
+                    }
+
+                    preferenceCategory = findPreference("key_preference_category_payday");
+                    if (preferenceCategory != null) {
+                        preferenceCategory.setVisible(true);
+                    }
+
+                    // when the dialog is shown to the user, the keyboard opens in numeric-only mode, so the user can enter only numbers into the EditText.
+                    EditTextPreference numberPreference = findPreference("key_payday_preference");
+                    if (numberPreference != null) {
+                        numberPreference.setOnBindEditTextListener(
+                                new EditTextPreference.OnBindEditTextListener() {
+                                    @Override
+                                    public void onBindEditText(@NonNull EditText editText) {
+                                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                        editText.setSelection(editText.getText().length());
+                                    }
+                                });
+                    }
+
+                    preferenceCategory = findPreference("key_preference_category_resources_costs");
+                    if (preferenceCategory != null) {
+                        preferenceCategory.setVisible(false);
+                    }
+
+                    break;
+                }
+
+                case "after_change": {
+
+                    ListPreference listPreference = findPreference("key_choose_bank_list_preference");
+                    if (listPreference != null) {
+                        listPreference.setVisible(true);
+                        listPreference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
+                    }
+
+                    EditTextPreference editTextPreference = findPreference("key_payday_preference");
+                    if (editTextPreference != null) {
+                        editTextPreference.setVisible(true);
+                        editTextPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
+                    }
+
+
+                    // when the dialog is shown to the user, the keyboard opens in numeric-only mode, so the user can enter only numbers into the EditText.
+                    EditTextPreference numberPreference = findPreference("key_payday_preference");
+                    if (numberPreference != null) {
+                        numberPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
+                        numberPreference.setOnBindEditTextListener(
+                                new EditTextPreference.OnBindEditTextListener() {
+                                    @Override
+                                    public void onBindEditText(@NonNull EditText editText) {
+                                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    }
+                                });
+                    }
+
+                    numberPreference = findPreference("key_resources_preference");
+                    if (numberPreference != null) {
+                        numberPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
+                        numberPreference.setOnBindEditTextListener(
+                                new EditTextPreference.OnBindEditTextListener() {
+                                    @Override
+                                    public void onBindEditText(@NonNull EditText editText) {
+                                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                        editText.setSelection(editText.getText().length());
+                                    }
+                                });
+                    }
+
+                    numberPreference = findPreference("key_costs_preference");
+                    if (numberPreference != null) {
+                        numberPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
+                        numberPreference.setOnBindEditTextListener(
+                                new EditTextPreference.OnBindEditTextListener() {
+                                    @Override
+                                    public void onBindEditText(@NonNull EditText editText) {
+                                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                        editText.setSelection(editText.getText().length());
+                                    }
+                                });
+                    }
+                    break;
+                }
+            }
+            if (str_which_settings.equals("costs")) {
+
+                // set all invisible besides costs
 
                 PreferenceCategory preferenceCategory = findPreference("key_preference_category_name_of_bank");
                 if (preferenceCategory != null) {
@@ -184,99 +311,13 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                     preferenceCategory.setVisible(false);
                 }
 
-                EditTextPreference numberPreference = findPreference("key_costs_preference");
+                EditTextPreference numberPreference = findPreference("key_resources_preference");
                 if (numberPreference != null) {
                     numberPreference.setVisible(false);
                 }
 
-                numberPreference = findPreference("key_resources_preference");
-                if (numberPreference != null) {
-                    numberPreference.setOnBindEditTextListener(
-                            new EditTextPreference.OnBindEditTextListener() {
-                                @Override
-                                public void onBindEditText(@NonNull EditText editText) {
-                                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                    editText.setSelection(editText.getText().length());
-                                }
-                            });
-                }
-
-            } else if (str_which_settings.equals("bank_payday_settings")){
-
-                // set visible only the bank and the payday setting
-
-                PreferenceCategory preferenceCategory = findPreference("key_preference_category_name_of_bank");
-                if (preferenceCategory != null) {
-                    preferenceCategory.setVisible(true);
-                }
-
-                preferenceCategory = findPreference("key_preference_category_payday");
-                if (preferenceCategory != null) {
-                    preferenceCategory.setVisible(true);
-                }
-
-                // when the dialog is shown to the user, the keyboard opens in numeric-only mode, so the user can enter only numbers into the EditText.
-                EditTextPreference numberPreference = findPreference("key_payday_preference");
-                if (numberPreference != null) {
-                    numberPreference.setOnBindEditTextListener(
-                            new EditTextPreference.OnBindEditTextListener() {
-                                @Override
-                                public void onBindEditText(@NonNull EditText editText) {
-                                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                    editText.setSelection(editText.getText().length());
-                                }
-                            });
-                }
-
-                preferenceCategory = findPreference("key_preference_category_resources_costs");
-                if (preferenceCategory != null) {
-                    preferenceCategory.setVisible(false);
-                }
-
-            } else if (str_which_settings.equals("after_change")) {
-
-                ListPreference listPreference = findPreference("key_choose_bank_list_preference");
-                if (listPreference != null) {
-                    listPreference.setVisible(true);
-                    listPreference.setSummaryProvider(ListPreference.SimpleSummaryProvider.getInstance());
-                }
-
-                EditTextPreference editTextPreference = findPreference("key_payday_preference");
-                if (editTextPreference != null) {
-                    editTextPreference.setVisible(true);
-                    editTextPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
-                }
-
-
-                // when the dialog is shown to the user, the keyboard opens in numeric-only mode, so the user can enter only numbers into the EditText.
-                EditTextPreference numberPreference = findPreference("key_payday_preference");
-                if (numberPreference != null) {
-                    numberPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
-                    numberPreference.setOnBindEditTextListener(
-                            new EditTextPreference.OnBindEditTextListener() {
-                                @Override
-                                public void onBindEditText(@NonNull EditText editText) {
-                                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                }
-                            });
-                }
-
-                numberPreference = findPreference("key_resources_preference");
-                if (numberPreference != null) {
-                    numberPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
-                    numberPreference.setOnBindEditTextListener(
-                            new EditTextPreference.OnBindEditTextListener() {
-                                @Override
-                                public void onBindEditText(@NonNull EditText editText) {
-                                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                    editText.setSelection(editText.getText().length());
-                                }
-                            });
-                }
-
                 numberPreference = findPreference("key_costs_preference");
                 if (numberPreference != null) {
-                    numberPreference.setSummaryProvider(EditTextPreference.SimpleSummaryProvider.getInstance());
                     numberPreference.setOnBindEditTextListener(
                             new EditTextPreference.OnBindEditTextListener() {
                                 @Override
@@ -286,8 +327,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                                 }
                             });
                 }
-            }
 
+            }
         }
     }
 }

@@ -1,7 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/str_the_name_of_bank">
+    <PreferenceCategory android:title="@string/str_the_name_of_bank"
+        android:key="key_preference_category_name_of_bank">
 
         <ListPreference
             android:defaultValue="none"
@@ -12,7 +13,8 @@
             android:title="@string/str_chose_the_bank_from_list" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/str_the_payday">
+    <PreferenceCategory android:title="@string/str_the_payday"
+        android:key="key_preference_category_payday">
 
         <EditTextPreference
             android:defaultValue="26"
@@ -24,7 +26,8 @@
             android:title="@string/str_the_payday" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/str_resources_and_costs">
+    <PreferenceCategory android:title="@string/str_resources_and_costs"
+        android:key="key_preference_category_resources_costs">
 
         <EditTextPreference
             android:defaultValue="0"

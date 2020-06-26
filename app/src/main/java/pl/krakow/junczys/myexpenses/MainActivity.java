@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
@@ -234,8 +235,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // DAILY BUDGET
-        TextView tv_daily_budget_value = findViewById(R.id.id_tv_daily_budget_value);
 
         // Payday read from preferences
         String str_payday = sharedPref.getString("key_payday_preference", "26");
@@ -248,13 +247,16 @@ public class MainActivity extends AppCompatActivity {
             int_payday = 26;
         }
 
-        tv_daily_budget_value.setText(format.format(f_last_penny/int_payday));
-
-
         TextView tv_days_to_payday_value = findViewById(R.id.id_tv_days_to_payday_value);
 
         obj = my_expenses.callAttr("get_days_to_payday", int_payday);
+        int int_days_to_payday = obj.toInt();
         tv_days_to_payday_value.setText( String.valueOf(obj.toInt()) );
+
+
+        // DAILY BUDGET
+        TextView tv_daily_budget_value = findViewById(R.id.id_tv_daily_budget_value);
+        tv_daily_budget_value.setText(format.format(f_last_penny/int_days_to_payday));
 
         TextView tv_last_updated = findViewById(R.id.id_tv_last_updated);
         stringBuilder = new StringBuilder();
@@ -267,12 +269,33 @@ public class MainActivity extends AppCompatActivity {
         tv_last_updated.setText(stringBuilder);
 
 
-        TextView tv_resourses = findViewById(R.id.id_tv_resources);
-        tv_resourses.setText(format.format(f_resources));
+        TextView tv_resources = findViewById(R.id.id_tv_resources);
+        tv_resources.setText(format.format(f_resources));
+
+        tv_resources.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("which_settings", "resources");  // pass your values and retrieve them in the other Activity using AnyKeyName
+                startActivity(intent);
+
+
+            }
+        });
 
 
         TextView tv_costs = findViewById(R.id.id_tv_costs);
         tv_costs.setText(format.format(f_costs));
+
+        tv_costs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
 

@@ -39,6 +39,8 @@ public class StartActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(StartActivity.this, SettingsActivity.class);
+                    // Inform SettingsActivity it must set up bank settings and payday
+                    intent.putExtra("which_settings", "bank_payday_settings");
                     startActivity(intent);
                     finish();
                 }

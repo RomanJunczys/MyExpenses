@@ -40,7 +40,7 @@ public class StartActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(StartActivity.this, SettingsActivity.class);
                     // Inform SettingsActivity it must set up bank settings and payday
-                    intent.putExtra("which_settings", "bank_payday_settings");
+                    intent.putExtra("which_settings", "start_settings");
                     startActivity(intent);
                     finish();
                 }
@@ -52,7 +52,6 @@ public class StartActivity extends AppCompatActivity {
 
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://junczys.krakow.pl/index.php/22-moje-wydatki"));
                     startActivity(browserIntent);
-
                     finish();
                 }
             });

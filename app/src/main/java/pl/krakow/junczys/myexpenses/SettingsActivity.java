@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.preference.PreferenceCategory;
 import android.text.InputType;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.EditText;
 import androidx.appcompat.app.ActionBar;
@@ -22,11 +23,9 @@ import java.util.Objects;
 import static androidx.preference.PreferenceManager.*;
 
 
-public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends AppCompatActivity{
 
     String TAG = "SettingsActivity: ";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +49,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-        setupSharedPreferences();
-
     }
 
-    private void setupSharedPreferences() {
-        SharedPreferences sharedPreferences = getDefaultSharedPreferences(this);
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-    }
-
-   void setPreferencesByDefault(String str_chose_bank){
+    void setPreferencesByDefault(String str_chose_bank){
 
         SharedPreferences sharedPref = getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -113,6 +104,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
             assert str_choose_bank != null;
             if( str_choose_bank.equals("none") ){
 
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+                startActivity(intent);
                 finish();
 
             } else {
@@ -120,8 +113,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 setPreferencesByDefault( str_choose_bank );
 
                 // In that place I have to choose the bank.
-                Intent intent = new Intent(SettingsActivity.this, StartActivity.class);
+                Intent intent = new Intent(getApplicationContext(), StartActivity.class);
                 startActivity(intent);
+                finish();
             }
 
            NavUtils.navigateUpFromSameTask(this);
@@ -129,27 +123,23 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
-        Log.d(TAG, "on shared preference changed");
-
-//        if (key.equals("key_bank_name_preference")) {
-//            Log.d(TAG, "key bank name prefernence");
-//        }
-
-        Intent intent = new Intent(this, SettingsActivity.class);
-        // Inform SettingsActivity it must set up bank settings and payday
-        intent.putExtra("which_settings", "after_change");
-        startActivity(intent);
-        finish();
-
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK ) {
+
+            Intent intent = new Intent(SettingsActivity.this, StartActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 
@@ -171,6 +161,10 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
             }
 
             switch (str_which_settings) {
+
+                case "start_settings": {
+                    break;
+                }
 
                 case "resources": {
 
@@ -204,6 +198,39 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                     }
 
                     break;
+                }
+
+                case "costs": {
+
+                    // set all invisible besides costs
+
+                    PreferenceCategory preferenceCategory = findPreference("key_preference_category_name_of_bank");
+                    if (preferenceCategory != null) {
+                        preferenceCategory.setVisible(false);
+                    }
+
+                    preferenceCategory = findPreference("key_preference_category_payday");
+                    if (preferenceCategory != null) {
+                        preferenceCategory.setVisible(false);
+                    }
+
+                    EditTextPreference numberPreference = findPreference("key_resources_preference");
+                    if (numberPreference != null) {
+                        numberPreference.setVisible(false);
+                    }
+
+                    numberPreference = findPreference("key_costs_preference");
+                    if (numberPreference != null) {
+                        numberPreference.setOnBindEditTextListener(
+                                new EditTextPreference.OnBindEditTextListener() {
+                                    @Override
+                                    public void onBindEditText(@NonNull EditText editText) {
+                                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                        editText.setSelection(editText.getText().length());
+                                    }
+                                });
+                    }
+
                 }
 
                 case "bank_payday_settings": {
@@ -297,38 +324,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                     break;
                 }
             }
-            if (str_which_settings.equals("costs")) {
 
-                // set all invisible besides costs
-
-                PreferenceCategory preferenceCategory = findPreference("key_preference_category_name_of_bank");
-                if (preferenceCategory != null) {
-                    preferenceCategory.setVisible(false);
-                }
-
-                preferenceCategory = findPreference("key_preference_category_payday");
-                if (preferenceCategory != null) {
-                    preferenceCategory.setVisible(false);
-                }
-
-                EditTextPreference numberPreference = findPreference("key_resources_preference");
-                if (numberPreference != null) {
-                    numberPreference.setVisible(false);
-                }
-
-                numberPreference = findPreference("key_costs_preference");
-                if (numberPreference != null) {
-                    numberPreference.setOnBindEditTextListener(
-                            new EditTextPreference.OnBindEditTextListener() {
-                                @Override
-                                public void onBindEditText(@NonNull EditText editText) {
-                                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                    editText.setSelection(editText.getText().length());
-                                }
-                            });
-                }
-
-            }
         }
     }
 }

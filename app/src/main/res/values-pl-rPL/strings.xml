@@ -8,7 +8,7 @@
     <string name="str_the_name_of_bank">Nazwa banku</string>
     <string name="str_the_payday">Dzień miesiąca z wypłatą</string>
     <string name="str_chose_the_bank_from_list">Wybierz swój bank z listy</string>
-    <string name="str_your_payday_day_of_the_month">Dzień wypłaty (dzień miesiąca)</string>
+    <string name="str_your_payday_day_of_the_month">Dzień miesiąca, w którym spodziewasz się wypłaty lub jakichś innych regularnych wpływów.</string>
     <string name="title_activity_settings">Ustawienia</string>
     <string name="str_read_sms">Aplikacja potrzebuje móc czytać smsy aby działać.</string>
     <string name="str_i_respect_your_choice">Szanuje Twój wybór.</string>
@@ -19,10 +19,11 @@
     <string name="str_last_penny">realnie możesz wydać</string>
     <string name="str_costs">Koszty</string>
     <string name="str_resources">Zasoby</string>
-    <string name="str_costs_description">Wydatki o których wiesz</string>
-    <string name="str_resources_description">Dodatkowe pieniądze</string>
-    <string name="str_resources_and_costs">Zaskórniaki i Koszty</string>
+    <string name="str_costs_description">Czekające Cię wydatki, o których wiesz, że musisz je zapłacić. Czynsz, prąd, media, hipoteka itd. itp.</string>
+    <string name="str_resources_description">Dodatkowe pieniądze, np. gotówka w portfelu, karta kredytowa itp.</string>
     <string name="str_days_to_payday">dni do wypłaty</string>
     <string name="str_account_balance">stan konta</string>
     <string name="str_last_update">ostatnia aktualizacja</string>
+    <string name="str_the_name_of_bank_in_your_messages">Potrzebuję nazwę twojego banku, tą, która jest w sms-ach, aby odczytać tylko sms-y z banku a z nich salda twojego konta.</string>
+    <string name="str_resources_and_costs">Dodatkowe pieniądze i dodatkowe koszty.</string>
 </resources>

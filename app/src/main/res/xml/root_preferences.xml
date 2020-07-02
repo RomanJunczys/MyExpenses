@@ -10,7 +10,7 @@
             android:entryValues="@array/choose_bank_values"
             android:key="key_choose_bank_list_preference"
             android:summary="@string/str_the_name_of_bank_in_your_messages"
-            android:title="@string/str_chose_the_bank_from_list" />
+            android:title= "@string/str_chose_the_bank_from_list" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/str_the_payday"

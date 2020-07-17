@@ -10,8 +10,11 @@ import com.opencsv.CSVReader;
 import java.io.File;
 import java.io.FileReader;
 import java.text.ParseException;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class MyExpenses {
     static final String TAG = "MyExpenses";
@@ -83,10 +86,54 @@ public class MyExpenses {
         return value;
     }
 
-
-    int getDaysToPayday(int dayOfMonth){
-        int days=0;
-
-        return days;
+    Date getLastUpdate(){
+        int last = accountBalances.size()-1;
+        Date date = accountBalances.get(last).date;
+        return date;
     }
+
+
+    long getDaysToPayday(int dayOfMonth){
+
+        long daysDiff;
+        Date today;
+        Calendar calendar;
+        Date dayOfPayday;
+        long msDiff;
+
+        // Today
+        today = Calendar.getInstance().getTime();
+
+
+        calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), dayOfMonth);
+        dayOfPayday = calendar.getTime();
+
+        // how many days in ms
+        msDiff = dayOfPayday.getTime() - today.getTime();
+
+        // how many days in days
+        daysDiff = TimeUnit.DAYS.convert(msDiff, TimeUnit.MILLISECONDS);
+
+        if( daysDiff == 0 ){
+
+            daysDiff = 30;
+
+        } else if ( daysDiff < 0 ){
+
+            // today is after pay_day then add one month 
+            calendar = Calendar.getInstance();
+            calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), dayOfMonth);
+            calendar.add(Calendar.MONTH, 1);
+            dayOfPayday = calendar.getTime();
+
+            // how many days
+            msDiff = dayOfPayday .getTime() - today.getTime();
+            daysDiff = TimeUnit.DAYS.convert(msDiff, TimeUnit.MILLISECONDS);
+
+        }
+
+        return daysDiff;
+    }
+
 }

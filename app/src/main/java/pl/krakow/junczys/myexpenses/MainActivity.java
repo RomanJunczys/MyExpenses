@@ -22,6 +22,7 @@ import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -220,70 +221,76 @@ public class MainActivity extends AppCompatActivity {
         TextView tv_last_penny = findViewById(R.id.id_tv_last_penny_value);
         tv_last_penny.setText(format.format(f_last_penny));
 
-//
-//
-//
-//        // Payday read from preferences
-//        String str_payday = sharedPref.getString("key_payday_preference", "26");
-//
-//        Integer int_payday;
-//        try {
-//            int_payday = Integer.parseInt(str_payday);
-//        } catch (NumberFormatException e) {
-//            // TODO use such a graphical interface to set this preferences to make sure it is integer form 1 to 31
-//            int_payday = 26;
-//        }
-//
-//        TextView tv_days_to_payday_value = findViewById(R.id.id_tv_days_to_payday_value);
-//
-//        obj = my_expenses.callAttr("get_days_to_payday", int_payday);
-//        int int_days_to_payday = obj.toInt();
-//        tv_days_to_payday_value.setText( String.valueOf(obj.toInt()) );
-//
-//
-//        // DAILY BUDGET
-//        TextView tv_daily_budget_value = findViewById(R.id.id_tv_daily_budget_value);
-//        tv_daily_budget_value.setText(format.format(f_last_penny/int_days_to_payday));
-//
-//        TextView tv_last_updated = findViewById(R.id.id_tv_last_updated);
-//        stringBuilder = new StringBuilder();
-//        stringBuilder.append(getString(R.string.str_last_update));
-//        stringBuilder.append(": ");
-//
-//        obj = my_expenses.callAttr("get_str_today");
-//        stringBuilder.append(obj.toString());
-//
-//        tv_last_updated.setText(stringBuilder);
-//
-//
-//        TextView tv_resources = findViewById(R.id.id_tv_resources);
-//        tv_resources.setText(format.format(f_resources));
-//
-//        tv_resources.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-//                intent.putExtra("which_settings", "resources");  // pass your values and retrieve them in the other Activity using AnyKeyName
-//                startActivity(intent);
-//
-//
-//            }
-//        });
-//
-//
-//        TextView tv_costs = findViewById(R.id.id_tv_costs);
-//        tv_costs.setText(format.format(f_costs));
-//
-//        tv_costs.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-//                intent.putExtra("which_settings", "costs");  // pass your values and retrieve them in the other Activity using AnyKeyName
-//                startActivity(intent);
-//
-//            }
-//        });
+
+
+
+        // Payday read from preferences
+        String str_payday = sharedPref.getString("key_payday_preference", "26");
+
+        Integer int_payday;
+
+        try {
+
+            int_payday = Integer.parseInt(str_payday);
+
+        } catch (NumberFormatException e) {
+
+            // TODO use such a graphical interface to set this preferences to make sure it is integer form 1 to 31
+            int_payday = 26;
+
+        }
+
+        TextView tv_days_to_payday_value = findViewById(R.id.id_tv_days_to_payday_value);
+
+        long daysToPayday = myExpenses.getDaysToPayday(int_payday);
+        tv_days_to_payday_value.setText( String.valueOf(daysToPayday) );
+
+
+        // DAILY BUDGET
+        TextView tv_daily_budget_value = findViewById(R.id.id_tv_daily_budget_value);
+        tv_daily_budget_value.setText(format.format(f_last_penny/daysToPayday));
+
+        TextView tv_last_updated = findViewById(R.id.id_tv_last_updated);
+        stringBuilder = new StringBuilder();
+        stringBuilder.append(getString(R.string.str_last_update));
+        stringBuilder.append(": ");
+
+        Date lastUpdate = myExpenses.getLastUpdate();
+
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+        stringBuilder.append(dateFormat.format(lastUpdate));
+
+        tv_last_updated.setText(stringBuilder);
+
+
+        TextView tv_resources = findViewById(R.id.id_tv_resources);
+        tv_resources.setText(format.format(f_resources));
+
+        tv_resources.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("which_settings", "resources");
+                startActivity(intent);
+
+
+            }
+        });
+
+
+        TextView tv_costs = findViewById(R.id.id_tv_costs);
+        tv_costs.setText(format.format(f_costs));
+
+        tv_costs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("which_settings", "costs");
+                startActivity(intent);
+
+            }
+        });
 
     }
 

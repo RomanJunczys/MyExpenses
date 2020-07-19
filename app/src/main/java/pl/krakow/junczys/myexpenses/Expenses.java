@@ -16,14 +16,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class MyExpenses {
+public class Expenses {
     static final String TAG = "MyExpenses";
 
     Context context;
     File csvFile;
     ArrayList<AccountBalance> accountBalances = new ArrayList<AccountBalance>();
 
-    public MyExpenses(Context context){
+    public Expenses(Context context){
         this.context = context;
     }
 

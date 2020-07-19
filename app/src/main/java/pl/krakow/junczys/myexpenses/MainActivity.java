@@ -34,14 +34,14 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     String TAG = "MainActivity: ";
-    MyExpenses myExpenses;
+    Expenses myExpenses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myExpenses = new MyExpenses(getApplicationContext());
+        myExpenses = new Expenses(getApplicationContext());
         myExpenses.setFile("my_expenses.csv");
 
         // Values
@@ -273,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 intent.putExtra("which_settings", "resources");
                 startActivity(intent);
+                finish();
 
 
             }
@@ -288,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 intent.putExtra("which_settings", "costs");
                 startActivity(intent);
+                finish();
 
             }
         });

@@ -22,6 +22,7 @@ import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,33 +34,31 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     String TAG = "MainActivity: ";
+    Expenses myExpenses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        TextView tv_text_view = findViewById(R.id.id_tv_text_view);
-//        ProgressBar pb_load_data = findViewById(R.id.id_pb_load_data);
-
-
-//        tv_text_view.setVisibility(View.INVISIBLE);
-//        pb_load_data.setVisibility(View.VISIBLE);
+        myExpenses = new Expenses(getApplicationContext());
+        myExpenses.setFile("my_expenses.csv");
 
         // Values
-        int howManyRecords = valuesToFile();
+        int howManyRecords = myExpenses.readFile();
+
         if(  howManyRecords > 0  ){
 
 
             // Report
             if( howManyRecords == 1 ) {
 
-                verySimpleReportVer2();
+                verySimpleReportVer3();
 
             } else {
 
                 // TODO if user wants to show more complatated report then do it if there are more records in file
-                verySimpleReportVer2();
+                verySimpleReportVer3();
                 // stringBuilder = verySimpleReport();
                 // stringBuilder = simpleReport();
 
@@ -181,6 +180,123 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "how Many Massages"+howManyMessages);
         return howManyMessages;
     }
+
+
+    void verySimpleReportVer3(){
+
+
+        SaveListOfStringsToCsv saveListOfStringsToCsv = new SaveListOfStringsToCsv(getApplicationContext(),"my_expenses.csv");
+        saveListOfStringsToCsv.getFile();
+
+
+
+       // Format currency
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        format.setMaximumFractionDigits(0);
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+
+
+        // ACCOUNT BALANCE
+        TextView tv_account_balance_value = findViewById(R.id.id_tv_account_balance);
+
+        float f_account_balance = myExpenses.getCurrentAccountBalance();
+        stringBuilder.append(getString(R.string.str_account_balance));
+        stringBuilder.append(": ");
+        stringBuilder.append(format.format(f_account_balance));
+        tv_account_balance_value.setText(stringBuilder);
+
+
+        // LAST PENNY account_balace + recources - costs
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String str_resources = sharedPref.getString("key_resources_preference", "0");
+        float f_resources = Float.parseFloat(str_resources);
+
+        String str_costs = sharedPref.getString("key_costs_preference", "0");
+        float f_costs = Float.parseFloat(str_costs);
+
+        float f_last_penny = f_account_balance + f_resources - f_costs;
+
+        TextView tv_last_penny = findViewById(R.id.id_tv_last_penny_value);
+        tv_last_penny.setText(format.format(f_last_penny));
+
+
+
+
+        // Payday read from preferences
+        String str_payday = sharedPref.getString("key_payday_preference", "26");
+
+        Integer int_payday;
+
+        try {
+
+            int_payday = Integer.parseInt(str_payday);
+
+        } catch (NumberFormatException e) {
+
+            // TODO use such a graphical interface to set this preferences to make sure it is integer form 1 to 31
+            int_payday = 26;
+
+        }
+
+        TextView tv_days_to_payday_value = findViewById(R.id.id_tv_days_to_payday_value);
+
+        long daysToPayday = myExpenses.getDaysToPayday(int_payday);
+        tv_days_to_payday_value.setText( String.valueOf(daysToPayday) );
+
+
+        // DAILY BUDGET
+        TextView tv_daily_budget_value = findViewById(R.id.id_tv_daily_budget_value);
+        tv_daily_budget_value.setText(format.format(f_last_penny/daysToPayday));
+
+        TextView tv_last_updated = findViewById(R.id.id_tv_last_updated);
+        stringBuilder = new StringBuilder();
+        stringBuilder.append(getString(R.string.str_last_update));
+        stringBuilder.append(": ");
+
+        Date lastUpdate = myExpenses.getLastUpdate();
+
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+        stringBuilder.append(dateFormat.format(lastUpdate));
+
+        tv_last_updated.setText(stringBuilder);
+
+
+        TextView tv_resources = findViewById(R.id.id_tv_resources);
+        tv_resources.setText(format.format(f_resources));
+
+        tv_resources.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("which_settings", "resources");
+                startActivity(intent);
+                finish();
+
+
+            }
+        });
+
+
+        TextView tv_costs = findViewById(R.id.id_tv_costs);
+        tv_costs.setText(format.format(f_costs));
+
+        tv_costs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("which_settings", "costs");
+                startActivity(intent);
+                finish();
+
+            }
+        });
+
+    }
+
+
 
 
     void verySimpleReportVer2(){

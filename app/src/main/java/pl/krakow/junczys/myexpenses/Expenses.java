@@ -92,6 +92,10 @@ public class Expenses {
         return date;
     }
 
+    int getSize(){
+        return accountBalances.size();
+    }
+
 
     long getDaysToPayday(int dayOfMonth){
 
